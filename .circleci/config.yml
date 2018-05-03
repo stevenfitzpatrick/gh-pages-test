@@ -37,9 +37,8 @@ workflows:
   build-deploy:
     jobs:
       - build
-      - deploy-job:
-          requires:
-            - build
-          filters:
-            branches:
-              only: master
+deployment:
+  deploy:
+    branch: master
+    commands:
+      - ls
