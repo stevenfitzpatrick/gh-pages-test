@@ -33,4 +33,4 @@ jobs:
       - run: aws --version
       - run: aws s3 ls
       - run: ls
-      - run: cat ./build
+      - run: aws s3 cp README.md s3://texascb2018
