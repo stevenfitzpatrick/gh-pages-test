@@ -31,6 +31,10 @@ jobs:
       - run: yarn test
       - run: sudo apt-get update && sudo apt-get install -y awscli
       - run: aws --version
-      - run: aws s3 ls
-      - run: ls
-      - run: aws s3 cp README.md s3://texascb2018
+  deployment:
+    production:
+      branch: master
+      commands:
+        - ./deploy_prod.sh
+        - aws s3 ls
+        - aws s3 cp README.md s3://texascb2018
