@@ -32,9 +32,6 @@ jobs:
       - run: yarn install
       - run: sudo apt-get update && sudo apt-get install -y awscli
       - run: aws --version
-      - run:
-          name: Deploy to S3 if tests pass and branch is Master
-          command: aws s3 cp ./ ./
 workflows:
   version: 2
   build-deploy:
