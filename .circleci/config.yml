@@ -1,41 +1,33 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:7.10
+    - image: circleci/node:8.11.1
 
 version: 2
 jobs:
   build:
     <<: *defaults
+
     steps:
       - checkout
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
       - run: yarn install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      # run tests!
-      - run: yarn test
   deploy:
     <<: *defaults
+
     steps:
       - checkout
       - run: yarn install
+      - run:
+          name: Storybook Build
+          command: yarn storybook:build
       - run:
           name: Install AWS CLI
           command: sudo apt-get update && sudo apt-get install -y awscli
-      - run:
-          name: Upload to S3
-          command: aws s3 sync ./buildtest s3://texascb2018 --delete
 workflows:
   version: 2
   build-and-deploy:
