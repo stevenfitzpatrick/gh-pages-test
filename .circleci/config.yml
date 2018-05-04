@@ -30,8 +30,12 @@ jobs:
     steps:
       - checkout
       - run: yarn install
-      - run: sudo apt-get update && sudo apt-get install -y awscli
-      - run: aws s3 sync ./buildtest s3://texascb2018 --delete
+      - run:
+          name: Install AWS CLI
+          command: sudo apt-get update && sudo apt-get install -y awscli
+      - run:
+          name: Upload to S3
+          command: aws s3 sync ./buildtest s3://texascb2018 --delete
 workflows:
   version: 2
   build-and-deploy:
